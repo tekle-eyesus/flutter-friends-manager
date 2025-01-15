@@ -1,6 +1,9 @@
+import 'package:class_1/box/student_box.dart';
 import 'package:class_1/model/student.dart';
+import 'package:class_1/screen/add_screen.dart';
 import 'package:class_1/screen/student_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -139,7 +142,15 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.blue,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          DispalyDialog(context);
+          // DispalyDialog(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const AddScreen();
+              },
+            ),
+          );
         },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
@@ -161,12 +172,33 @@ class _HomePageState extends State<HomePage> {
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(10),
               )),
-          child: _buildStudentList()),
+          child: _buildListTitle()),
+    );
+  }
+
+  Widget _buildListTitle() {
+    if (studentBox.isEmpty) {
+      return Center(
+        child: Image.asset(
+          "assets/image/empty.png",
+          height: 300,
+        ),
+      );
+    }
+    return ListView.builder(
+      itemCount: studentBox.length,
+      itemBuilder: (context, index) {
+        Student student = studentBox.getAt(index);
+        return ListTile(
+          title: (Text(student.fullName)),
+          subtitle: Text(student.email),
+        );
+      },
     );
   }
 
   Widget _buildStudentList() {
-    if (_studentBox == null) {
+    if (studentBox.isEmpty) {
       return const Center(
         child: CircularProgressIndicator(
           color: Colors.black,

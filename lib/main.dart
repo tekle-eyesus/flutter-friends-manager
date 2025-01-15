@@ -1,12 +1,16 @@
+import 'package:class_1/box/student_box.dart';
+import 'package:class_1/model/student.dart';
 import 'package:class_1/screen/home.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final documentDirectory = await getApplicationDocumentsDirectory();
-  Hive.init(documentDirectory.path);
+  // final documentDirectory = await getApplicationDocumentsDirectory();
+  // Hive.init(documentDirectory.path);
+  await Hive.initFlutter();
+  Hive.registerAdapter(StudentAdapter());
+  studentBox = await Hive.openBox<Student>('studentBox');
   runApp(const MyApp());
 }
 
