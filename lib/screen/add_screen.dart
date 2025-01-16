@@ -72,7 +72,7 @@ class _AddScreenState extends State<AddScreen> {
       child: Column(
         children: [
           ImageSelector(onImageSelect: (x) {
-            selectImage(pickedImage);
+            selectImage(x);
           }),
           const SizedBox(
             height: 10,

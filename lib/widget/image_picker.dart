@@ -13,13 +13,25 @@ class ImageSelector extends StatefulWidget {
 
 class _ImageSelectorState extends State<ImageSelector> {
   File? pickedImage;
+  // Future<void> _pickImage() async {
+  //   final ImagePicker piker = ImagePicker();
+  //   XFile? image = await piker.pickImage(source: ImageSource.gallery);
+  //   if (image != null) {
+  //     setState(() {
+  //       pickedImage = File(image.path);
+  //       widget.onImageSelect(image.path);
+  //     });
+  //   }
+  // }
+
   Future<void> _pickImage() async {
-    final ImagePicker piker = ImagePicker();
-    XFile? image = await piker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
-        pickedImage = File(image.path);
-        widget.onImageSelect(pickedImage.toString());
+        pickedImage = File(image.path); // File reference
+        // Save the file path in the Student object
+        widget.onImageSelect(image.path); // Ensure this passes the correct path
       });
     }
   }
