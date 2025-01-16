@@ -2,9 +2,10 @@ import 'dart:io';
 import 'package:class_1/controllers/box_controller.dart';
 import 'package:class_1/model/student.dart';
 import 'package:class_1/widget/custom_tf.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:class_1/widget/date_picker.dart';
+import 'package:class_1/widget/dept_selector.dart';
+import 'package:class_1/widget/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
@@ -16,7 +17,7 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
-  File? pickedImage;
+  String pickedImage = "";
   DateTime selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -51,61 +52,28 @@ class _AddScreenState extends State<AddScreen> {
     TextEditingController dobController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
     TextEditingController planController = TextEditingController();
-    String selectedCategory = "software engineer";
+    String selectedDpt = "software engineer";
+    BoxServices boxServices = BoxServices();
 
-    List<String> departmentList = [
-      "software engineer",
-      "IS",
-      "CS",
-      "IT",
-      "Mechanical Engineer"
-    ];
+    void selectDate(DateTime date) {
+      selectedDate = date;
+    }
 
-    Future<void> _pickImage() async {
-      final ImagePicker piker = ImagePicker();
-      XFile? image = await piker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        setState(() {
-          pickedImage = File(image.path);
-          print("file name ::::::${pickedImage}");
-        });
-      }
+    void selectDepartment(String department) {
+      selectedDpt = department;
+    }
+
+    void selectImage(String pickedImg) {
+      pickedImage = pickedImg; // covert to file when used
     }
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
-          GestureDetector(
-            onTap: () async {
-              await _pickImage();
-            },
-            child: Stack(
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.amber,
-                  backgroundImage:
-                      pickedImage != null ? FileImage(pickedImage!) : null,
-                  radius: 65,
-                ),
-                if (pickedImage == null)
-                  const CircleAvatar(
-                    backgroundColor: Colors.amber,
-                    // backgroundImage: FileImage(pickedImage!),
-                    radius: 60,
-                  ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Image.asset(
-                    "assets/icons/camera.png",
-                    width: 32,
-                    height: 32,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          ImageSelector(onImageSelect: (x) {
+            selectImage(pickedImage);
+          }),
           const SizedBox(
             height: 10,
           ),
@@ -153,78 +121,15 @@ class _AddScreenState extends State<AddScreen> {
           const SizedBox(
             height: 6,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            width: MediaQuery.of(context).size.width,
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey.shade300,
-            ),
-            child: ListTile(
-              leading: Image.asset(
-                "assets/icons/birthday.png",
-                width: 30,
-                height: 30,
-              ),
-              title: Text(
-                '${selectedDate.year}-0${selectedDate.month}-0${selectedDate.day}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
-              trailing: IconButton(
-                onPressed: () async {
-                  final DateTime? dateTime = await showDatePicker(
-                      context: context,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(3000),
-                      initialDate: selectedDate);
-                  if (dateTime != null) {
-                    setState(
-                      () {
-                        selectedDate = dateTime;
-                      },
-                    );
-                  }
-                },
-                icon: const Icon(
-                  Icons.calendar_month_rounded,
-                  size: 30,
-                ),
-              ),
-            ),
-          ),
+          DatePicker(onDateSelected: (date) {
+            selectDate(selectedDate);
+          }),
           const SizedBox(
             height: 20,
           ),
-          DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              labelText: "department",
-              labelStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-              fillColor: Colors.grey.shade300,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-            ),
-            value: selectedCategory, // Initial value
-            items: departmentList.map(
-              (String category) {
-                return DropdownMenuItem<String>(
-                  value: category,
-                  child: Text(category),
-                );
-              },
-            ).toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedCategory = newValue!;
-              });
+          departmentBtn(
+            onCategorySelect: (x) {
+              selectDepartment(selectedDpt);
             },
           ),
           const SizedBox(
@@ -255,9 +160,10 @@ class _AddScreenState extends State<AddScreen> {
                   profileImg: pickedImage.toString(),
                   dop: selectedDate,
                   phone: phoneController.text,
-                  department: selectedCategory,
+                  department: selectedDpt,
                   plan: planController.text);
-              BoxServices().addStudent(student, context);
+              boxServices.addStudent(student, context);
+              Navigator.pop(context);
             },
             child: Container(
               alignment: Alignment.center,

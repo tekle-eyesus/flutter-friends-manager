@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:class_1/box/student_box.dart';
 import 'package:class_1/model/student.dart';
 import 'package:class_1/screen/add_screen.dart';
 import 'package:class_1/screen/student_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -185,16 +188,55 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
-    return ListView.builder(
-      itemCount: studentBox.length,
-      itemBuilder: (context, index) {
-        Student student = studentBox.getAt(index);
-        return ListTile(
-          title: (Text(student.fullName)),
-          subtitle: Text(student.email),
-        );
-      },
-    );
+    return ValueListenableBuilder(
+        valueListenable: studentBox.listenable(),
+        builder: (context, box, widget) {
+          return ListView.builder(
+            itemCount: studentBox.length,
+            itemBuilder: (context, index) {
+              Student student = studentBox.getAt(index);
+              File? profileImg = File(student.profileImg);
+              return Slidable(
+                  // Specify a key if the Slidable is dismissible.
+                  key: const ValueKey(0),
+
+                  // The start action pane is the one at the left or the top side.
+                  startActionPane: ActionPane(
+                    // A motion is a widget used to control how the pane animates.
+                    motion: const ScrollMotion(),
+
+                    // A pane can dismiss the Slidable.
+                    dismissible: DismissiblePane(onDismissed: () {}),
+
+                    // All actions are defined in the children parameter.
+                    children: [
+                      // A SlidableAction can have an icon and/or a label.
+                      SlidableAction(
+                        onPressed: (context) {},
+                        backgroundColor: Color(0xFFFE4A49),
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                        label: 'Delete',
+                      ),
+                      SlidableAction(
+                        onPressed: (context) {},
+                        backgroundColor: Color(0xFF21B7CA),
+                        foregroundColor: Colors.white,
+                        icon: Icons.share,
+                        label: 'Share',
+                      ),
+                    ],
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: FileImage(profileImg),
+                    ),
+                    title: (Text(student.fullName)),
+                    subtitle: Text(student.email),
+                  ));
+            },
+          );
+        });
   }
 
   Widget _buildStudentList() {
