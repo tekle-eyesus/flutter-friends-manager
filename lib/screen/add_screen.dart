@@ -22,10 +22,18 @@ class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade600,
+      backgroundColor: Colors.blue.shade800,
       appBar: AppBar(
         backgroundColor: Colors.grey.shade600,
         foregroundColor: Colors.grey.shade100,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.topLeft,
+                colors: <Color>[Colors.purple.shade800, Colors.blue.shade900]),
+          ),
+        ),
         title: Text(
           "ADD",
           style: TextStyle(

@@ -1,18 +1,42 @@
+import 'package:class_1/model/student.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StudentDetail extends StatelessWidget {
-  final Map<dynamic, dynamic> student;
-  final int index;
-  const StudentDetail({super.key, required this.student, required this.index});
+  final Student student;
+
+  const StudentDetail({super.key, required this.student});
 
   @override
   Widget build(BuildContext context) {
-    print(student);
-    print(index);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade200,
-        title: const Text("Student Detail"),
+        foregroundColor: Colors.grey.shade200,
+        title: Text(
+          "Sudent Detail",
+          style: GoogleFonts.lato(
+            textStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade300,
+              fontSize: 19,
+            ),
+          ),
+        ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.topLeft,
+                colors: <Color>[Colors.purple.shade800, Colors.blue.shade900]),
+          ),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.edit,
+              ))
+        ],
       ),
       body: Stack(
         clipBehavior: Clip.none,
@@ -39,7 +63,7 @@ class StudentDetail extends StatelessWidget {
                       "https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?b=1&s=612x612&w=0&k=20&c=4QffcxGza_rr--wWMoe4up9EOJ_rhG4EPYcH5Is-Mv0="),
                 ),
                 Text(
-                  student["name"],
+                  student.fullName,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 23,
@@ -47,14 +71,14 @@ class StudentDetail extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  student["department"],
+                  student.department,
                   style: TextStyle(
                     color: Colors.blue.shade800,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                _planBuilder(student['plan']),
+                _planBuilder(student.plan),
               ],
             ),
           ),
