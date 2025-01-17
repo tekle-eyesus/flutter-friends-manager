@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:class_1/model/student.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +12,7 @@ class StudentDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 222, 238, 252),
       appBar: AppBar(
         foregroundColor: Colors.grey.shade200,
         title: Text(
@@ -33,7 +36,7 @@ class StudentDetail extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.edit,
               ))
         ],
@@ -50,69 +53,38 @@ class StudentDetail extends StatelessWidget {
                     image: NetworkImage(
                         "https://static.vecteezy.com/system/resources/thumbnails/023/056/329/small_2x/programmer-people-working-laptops-or-smartphones-with-ai-artificial-intelligence-software-engineer-coding-on-laptop-computers-with-technology-icons-and-binary-code-big-data-ai-bot-digital-machine-photo.jpg"))),
           ),
-
           Positioned(
             top: 55,
-            left: 10,
+            left: 140,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CircleAvatar(
-                  radius: 55,
-                  backgroundImage: NetworkImage(
-                      "https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?b=1&s=612x612&w=0&k=20&c=4QffcxGza_rr--wWMoe4up9EOJ_rhG4EPYcH5Is-Mv0="),
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: FileImage(File(student.profileImg)),
                 ),
                 Text(
                   student.fullName,
-                  style: TextStyle(
+                  style: GoogleFonts.getFont(
+                    "Lato",
                     fontWeight: FontWeight.bold,
-                    fontSize: 23,
-                    color: Colors.blue.shade900,
+                    fontSize: 25,
+                    color: Colors.black,
                   ),
                 ),
                 Text(
-                  student.department,
+                  student.email,
                   style: TextStyle(
-                    color: Colors.blue.shade800,
+                    color: Colors.grey.shade700,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                _planBuilder(student.plan),
               ],
             ),
           ),
-
-          // _imageBuilder(),
         ],
       ),
-    );
-  }
-
-  Widget _imageBuilder() {
-    return Container(
-      child: Image.network(
-        "https://media.istockphoto.com/id/1438969575/photo/smiling-young-male-college-student-wearing-headphones-standing-in-a-classroom.jpg?b=1&s=612x612&w=0&k=20&c=4QffcxGza_rr--wWMoe4up9EOJ_rhG4EPYcH5Is-Mv0=",
-        height: 300,
-      ),
-    );
-  }
-
-  Widget _planBuilder(String plan) {
-    return Container(
-      width: 340,
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.grey.shade400,
-      ),
-      child: Text(
-          style: const TextStyle(
-            fontSize: 20,
-            fontStyle: FontStyle.italic,
-          ),
-          "\"${plan}\""),
     );
   }
 }
