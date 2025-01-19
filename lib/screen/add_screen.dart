@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:class_1/controllers/box_controller.dart';
 import 'package:class_1/model/student.dart';
 import 'package:class_1/widget/custom_tf.dart';
@@ -6,7 +5,6 @@ import 'package:class_1/widget/date_picker.dart';
 import 'package:class_1/widget/dept_selector.dart';
 import 'package:class_1/widget/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class AddScreen extends StatefulWidget {

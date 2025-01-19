@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:class_1/helper/helper_fun.dart';
 import 'package:class_1/model/student.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StudentDetail extends StatelessWidget {
   final Student student;
@@ -39,7 +42,9 @@ class StudentDetail extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showEditDialog(context, student);
+              },
               icon: const Icon(
                 Icons.edit,
               ))
@@ -100,9 +105,20 @@ class StudentDetail extends StatelessWidget {
               Container(
                 width: 180,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7),
-                  color: Colors.amber,
-                ),
+                    borderRadius: BorderRadius.circular(7),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.grey.shade100,
+                        Colors.grey.shade200,
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade300,
+                        offset: const Offset(0.8, 0.4),
+                        blurRadius: 2,
+                      )
+                    ]),
                 child: Expanded(
                   child: ListTile(
                     leading: Image.asset(
@@ -110,17 +126,41 @@ class StudentDetail extends StatelessWidget {
                       width: 30,
                       height: 30,
                     ),
-                    title: Text("BIRTHDAY"),
-                    subtitle: Text(student.dop.year.toString()),
+                    title: Text(
+                      "BIRTHDAY",
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      getDate(student.dop),
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 17.6,
+                      ),
+                    ),
                   ),
                 ),
               ),
               Container(
                 width: 200,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7),
-                  color: Colors.amber,
-                ),
+                    borderRadius: BorderRadius.circular(7),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.grey.shade100,
+                        Colors.grey.shade200,
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade300,
+                        offset: const Offset(0.8, 0.4),
+                        blurRadius: 2,
+                      )
+                    ]),
                 child: Expanded(
                   child: ListTile(
                     leading: Image.asset(
@@ -128,17 +168,37 @@ class StudentDetail extends StatelessWidget {
                       width: 30,
                       height: 30,
                     ),
-                    title: const Text("Department"),
-                    subtitle: Text(student.department.split(" ")[0]),
+                    title: Text(
+                      "DEPARTMENT",
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      student.department.split(" ")[0],
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 17.6,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ],
           ),
           Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
+              gradient: LinearGradient(
+                colors: [
+                  Colors.grey.shade100,
+                  Colors.grey.shade200,
+                ],
+              ),
             ),
             child: ListTile(
               leading: Image.asset(
@@ -146,38 +206,87 @@ class StudentDetail extends StatelessWidget {
                 width: 34,
                 height: 34,
               ),
-              title: const Text("PHONE"),
-              subtitle: Text(student.phone),
-              trailing: Image.asset(
-                "assets/icons/phoned.png",
-                width: 36,
-                height: 36,
+              title: Text(
+                "PHONE",
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                student.phone,
+                style: TextStyle(
+                  color: Colors.grey.shade800,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 17.6,
+                ),
+              ),
+              trailing: GestureDetector(
+                onTap: () async {
+                  final Uri url = Uri(scheme: 'tel', path: student.phone);
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url);
+                  } else {
+                    print("can not lounch this URL !!");
+                  }
+                },
+                child: Image.asset(
+                  "assets/icons/phoned.png",
+                  width: 36,
+                  height: 36,
+                ),
               ),
             ),
           ),
-          ExpansionTile(
-            shape: Border(),
-            title: Text("PLAN"),
-            leading: Image.asset(
-              "assets/icons/plan.png",
-              width: 32,
-              height: 32,
+          Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 5,
             ),
-            children: const [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 13),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 380,
-                      child: Text(
-                          "noll anawer following follows bolled ba mvnv nmxmx ksks slls sllsowow eieiuw wiwoqwouw qooqowpq wqowqw wqiu ee qeiueq qoqoo"),
-                    ),
-                  ],
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              gradient: LinearGradient(
+                colors: [
+                  Colors.grey.shade100,
+                  Colors.grey.shade200,
+                ],
+              ),
+            ),
+            child: ExpansionTile(
+              shape: const Border(),
+              title: Text(
+                "PLAN",
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
+              leading: Image.asset(
+                "assets/icons/plan.png",
+                width: 32,
+                height: 32,
+              ),
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 360,
+                        child: Text(
+                          student.plan,
+                          style: const TextStyle(
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

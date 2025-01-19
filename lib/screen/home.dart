@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:class_1/box/student_box.dart';
 import 'package:class_1/controllers/box_controller.dart';
+import 'package:class_1/helper/helper_fun.dart';
 import 'package:class_1/model/student.dart';
 import 'package:class_1/screen/add_screen.dart';
 import 'package:class_1/screen/student_detail.dart';
@@ -91,20 +92,6 @@ class _HomePageState extends State<HomePage> {
       } else {
         return const AssetImage('assets/image/user.png'); // Fallback image
       }
-    }
-
-    String getDate(DateTime date) {
-      String month = date.month.toString();
-      String day = date.day.toString();
-
-      if (month.length == 1) {
-        month = "0${date.month}";
-      }
-      if (day.length == 1) {
-        day = "0${date.day}";
-      }
-      String dateFormat = '${date.year}-$month-$day';
-      return dateFormat;
     }
 
     return ValueListenableBuilder(
