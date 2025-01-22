@@ -6,11 +6,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // final documentDirectory = await getApplicationDocumentsDirectory();
-  // Hive.init(documentDirectory.path);
   await Hive.initFlutter();
   Hive.registerAdapter(StudentAdapter());
-  studentBox = await Hive.openBox<Student>('studentBox');
+  studentBox = await Hive.openBox<Student>('studentBox2');
   runApp(const MyApp());
 }
 
@@ -21,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

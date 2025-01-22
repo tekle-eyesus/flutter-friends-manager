@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:math';
 
+import 'package:class_1/controllers/box_controller.dart';
 import 'package:class_1/model/student.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 String getDate(DateTime date) {
   String month = date.month.toString();
@@ -18,6 +21,7 @@ String getDate(DateTime date) {
 }
 
 void showEditDialog(BuildContext ctx, Student student) {
+  BoxServices boxServices = BoxServices();
   TextEditingController _nameController =
       TextEditingController(text: student.fullName);
   TextEditingController _departmentController =
@@ -26,47 +30,136 @@ void showEditDialog(BuildContext ctx, Student student) {
       TextEditingController(text: student.phone);
   TextEditingController _planController =
       TextEditingController(text: student.plan);
+  TextEditingController _emailController =
+      TextEditingController(text: student.email);
+
+  InputDecoration inputDecoration() {
+    return InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+        fillColor: Colors.blue.shade100,
+        filled: true,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(10),
+        ));
+  }
 
   showDialog(
       context: ctx,
       builder: (context) {
         return AlertDialog(
-          title: const Text("edit"),
+          backgroundColor: Colors.blue.shade200,
+          title: const Text("Edit Student"),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               //image
-              CircleAvatar(
-                radius: 35,
-                backgroundImage: FileImage(File(student.profileImg)),
+              GestureDetector(
+                onTap: () {
+                  //image update logic here
+                },
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: FileImage(File(student.profileImg)),
+                ),
+              ),
+              const SizedBox(
+                height: 7,
               ),
               TextField(
+                decoration: inputDecoration(),
                 controller: _nameController,
               ),
+              const SizedBox(
+                height: 7,
+              ),
               TextField(
+                decoration: inputDecoration(),
                 controller: _phoneController,
               ),
-              TextField(
-                controller: _departmentController,
+              const SizedBox(
+                height: 7,
               ),
               TextField(
+                decoration: inputDecoration(),
+                controller: _departmentController,
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              TextField(
+                decoration: inputDecoration(),
                 controller: _planController,
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              TextField(
+                decoration: inputDecoration(),
+                controller: _emailController,
               ),
             ],
           ),
           actions: [
             TextButton(
-                onPressed: () {
-                  //update logic here
-                },
-                child: Text("Save")),
-            TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll(Colors.blue.shade500),
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Cancel")),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                    color: Colors.blue.shade100,
+                  ),
+                )),
+            TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll(Colors.blue.shade500),
+                ),
+                onPressed: () {
+                  //update logic here
+                  Student uptStudent = Student(
+                    id: student.id,
+                    fullName: _nameController.text,
+                    email: _emailController.text,
+                    profileImg: student.profileImg,
+                    dop: student.dop,
+                    phone: _phoneController.text,
+                    department: _departmentController.text,
+                    plan: _planController.text,
+                  );
+                  //send to controller
+                  boxServices.updateStudent(uptStudent, context);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Save",
+                  style: TextStyle(
+                    color: Colors.blue.shade100,
+                  ),
+                )),
           ],
         );
       });
+}
+
+void DisplayMessage(BuildContext context, String mesg) {
+  final snackBar = SnackBar(
+    content: Text(
+      mesg,
+      style: const TextStyle(color: Colors.white),
+    ),
+    backgroundColor: Colors.grey.shade900,
+    duration: Duration(seconds: 1),
+    behavior: SnackBarBehavior.floating,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

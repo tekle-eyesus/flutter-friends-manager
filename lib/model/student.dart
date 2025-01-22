@@ -4,20 +4,23 @@ part 'student.g.dart';
 @HiveType(typeId: 1)
 class Student {
   @HiveField(0)
-  String fullName;
+  String id;
   @HiveField(1)
-  String email;
+  String fullName;
   @HiveField(2)
-  String profileImg;
+  String email;
   @HiveField(3)
-  DateTime dop;
+  String profileImg;
   @HiveField(4)
-  String phone;
+  DateTime dop;
   @HiveField(5)
-  String department;
+  String phone;
   @HiveField(6)
+  String department;
+  @HiveField(7)
   String plan;
   Student({
+    required this.id,
     required this.fullName,
     required this.email,
     required this.profileImg,

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:class_1/helper/helper_fun.dart';
 import 'package:class_1/model/student.dart';
@@ -10,10 +11,14 @@ import 'package:url_launcher/url_launcher.dart';
 class StudentDetail extends StatelessWidget {
   final Student student;
 
-  const StudentDetail({super.key, required this.student});
+  const StudentDetail({
+    super.key,
+    required this.student,
+  });
 
   @override
   Widget build(BuildContext context) {
+    var intValue = Random().nextInt(7);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 222, 238, 252),
       appBar: AppBar(
@@ -42,6 +47,8 @@ class StudentDetail extends StatelessWidget {
         ),
         actions: [
           IconButton(
+              style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.purple)),
               onPressed: () {
                 showEditDialog(context, student);
               },
@@ -57,12 +64,13 @@ class StudentDetail extends StatelessWidget {
             children: [
               Container(
                 height: 115,
-                decoration: const BoxDecoration(
-                    color: Colors.amber,
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://static.vecteezy.com/system/resources/thumbnails/023/056/329/small_2x/programmer-people-working-laptops-or-smartphones-with-ai-artificial-intelligence-software-engineer-coding-on-laptop-computers-with-technology-icons-and-binary-code-big-data-ai-bot-digital-machine-photo.jpg"))),
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade400,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/image/${intValue + 1}.jpg'),
+                  ),
+                ),
               ),
               Positioned(
                 top: 55,
@@ -71,7 +79,7 @@ class StudentDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
-                      radius: 60,
+                      radius: 70,
                       backgroundImage: FileImage(File(student.profileImg)),
                     ),
                     Text(
@@ -97,7 +105,7 @@ class StudentDetail extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 130,
+            height: 160,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

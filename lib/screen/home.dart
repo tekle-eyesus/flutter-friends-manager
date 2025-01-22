@@ -7,6 +7,7 @@ import 'package:class_1/screen/add_screen.dart';
 import 'package:class_1/screen/student_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:slideable/slideable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100,
+      backgroundColor: Color.fromARGB(255, 2, 72, 133),
       appBar: AppBar(
         title: Text(
           "MyFriends",
@@ -48,35 +49,29 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                size: 35,
-                color: Colors.grey.shade200,
-              )),
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const AddScreen();
-                    },
-                  ),
-                );
-              },
-              icon: Icon(
-                Icons.add_circle,
-                size: 35,
-                color: Colors.grey.shade200,
-              )),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const AddScreen();
+                  },
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.add_circle,
+              size: 35,
+              color: Colors.grey.shade200,
+            ),
+          ),
         ],
       ),
       body: Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.blue.shade100,
-            borderRadius: const BorderRadius.vertical(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 222, 238, 252),
+            borderRadius: BorderRadius.vertical(
               top: Radius.circular(10),
             ),
           ),
@@ -110,30 +105,31 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index) {
             Student student = studentBox.getAt(index);
 
-            return Slidable(
-              key: const ValueKey(0),
-              startActionPane: ActionPane(
-                motion: const ScrollMotion(),
-                dismissible: DismissiblePane(onDismissed: () {}),
-                children: [
-                  SlidableAction(
-                    onPressed: (context) {
-                      boxServices.deleteStudent(index);
-                    },
-                    backgroundColor: Color(0xFFFE4A49),
-                    foregroundColor: Colors.white,
-                    icon: Icons.delete,
-                    label: 'Delete',
+            return Slideable(
+              //  resetSlide: resetSlide,
+              items: <ActionItems>[
+                ActionItems(
+                  icon: const Icon(
+                    Icons.favorite,
+                    color: Colors.blue,
                   ),
-                  SlidableAction(
-                    onPressed: (context) {},
-                    backgroundColor: const Color(0xFF21B7CA),
-                    foregroundColor: Colors.white,
-                    icon: Icons.share,
-                    label: 'Share',
+                  onPress: () {
+                    // add to favorite!!!
+                    DisplayMessage(context, "Test Text for!!");
+                  },
+                  backgroudColor: Colors.transparent,
+                ),
+                ActionItems(
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
                   ),
-                ],
-              ),
+                  onPress: () {
+                    boxServices.deleteStudent(index, context);
+                  },
+                  backgroudColor: Colors.transparent,
+                ),
+              ],
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -145,15 +141,16 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 6),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      color: Colors.grey.shade100,
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(1, 1),
-                          color: Colors.grey.shade800,
-                          blurRadius: 3,
-                        )
-                      ]),
+                    borderRadius: BorderRadius.circular(7),
+                    color: Colors.grey.shade100,
+                    boxShadow: [
+                      BoxShadow(
+                        offset: const Offset(1, 1),
+                        color: Colors.grey.shade500,
+                        blurRadius: 3,
+                      )
+                    ],
+                  ),
                   child: ListTile(
                     isThreeLine: true,
                     leading: CircleAvatar(

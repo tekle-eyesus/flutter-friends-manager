@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:class_1/controllers/box_controller.dart';
 import 'package:class_1/model/student.dart';
 import 'package:class_1/widget/custom_tf.dart';
@@ -163,6 +165,7 @@ class _EditScreenState extends State<EditScreen> {
             onTap: () {
               // add the student to db
               Student student = Student(
+                  id: Random().nextInt(1000).toString(),
                   fullName: nameController.text,
                   email: emailController.text,
                   profileImg: pickedImage.toString(),
