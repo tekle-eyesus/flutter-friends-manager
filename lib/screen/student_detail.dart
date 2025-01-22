@@ -276,8 +276,10 @@ class StudentDetail extends StatelessWidget {
               ),
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 13,
+                    vertical: 15,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

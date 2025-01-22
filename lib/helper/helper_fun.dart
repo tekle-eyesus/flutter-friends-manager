@@ -1,10 +1,7 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:class_1/controllers/box_controller.dart';
 import 'package:class_1/model/student.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 String getDate(DateTime date) {
   String month = date.month.toString();
@@ -49,7 +46,13 @@ void showEditDialog(BuildContext ctx, Student student) {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.blue.shade200,
-          title: const Text("Edit Student"),
+          title: Text(
+            "Edit Student",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blue.shade900,
+            ),
+          ),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

@@ -139,17 +139,10 @@ class _HomePageState extends State<HomePage> {
                   }));
                 },
                 child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 6),
+                  margin: const EdgeInsets.symmetric(vertical: 3),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
+                    borderRadius: BorderRadius.circular(10),
                     color: Colors.grey.shade100,
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(1, 1),
-                        color: Colors.grey.shade500,
-                        blurRadius: 3,
-                      )
-                    ],
                   ),
                   child: ListTile(
                     isThreeLine: true,
@@ -160,9 +153,9 @@ class _HomePageState extends State<HomePage> {
                     title: Text(
                       student.fullName,
                       style: GoogleFonts.overpass(
-                        textStyle: const TextStyle(
+                        textStyle: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.blue.shade900,
                           fontSize: 22,
                         ),
                       ),
@@ -170,13 +163,34 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Email: ${student.email}',
-                          style: GoogleFonts.getFont(
-                            "Lato",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                          ),
+                        // Text(
+                        //   'Email: ${student.email}',
+                        //   style: GoogleFonts.getFont(
+                        //     "Lato",
+                        //     fontWeight: FontWeight.w500,
+                        //     fontSize: 18,
+                        //   ),
+                        // ),
+                        RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: "Email: ",
+                                style: GoogleFonts.getFont(
+                                  "Lato",
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                  color: Colors.grey.shade700,
+                                )),
+                            TextSpan(
+                              text: student.email,
+                              style: GoogleFonts.getFont(
+                                "Lato",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            )
+                          ]),
                         ),
                         Row(
                           children: [
