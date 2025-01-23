@@ -8,20 +8,20 @@ class BoxServices {
   void addStudent(Student student, BuildContext context) async {
     try {
       await studentBox.put(student.id, student);
-      DisplayMessage(context, "Student data added");
+      DisplayMessage(context, "Student added successfully!");
     } catch (e) {
       print(e);
     }
   }
 
   void deleteStudent(int index, BuildContext context) {
+    Student studentData = studentBox.getAt(index);
     studentBox.deleteAt(index);
-    DisplayMessage(context, "Student Deleted!");
+    DisplayDeleteMessage(context, "Student deleted successfully!", studentData);
   }
 
   void updateStudent(Student student, BuildContext context) {
-    print("Full Name of the Student : " + student.phone);
     studentBox.put(student.id, student);
-    DisplayMessage(context, "Student Data updated!!");
+    DisplayMessage(context, "Student data updated successfully!");
   }
 }

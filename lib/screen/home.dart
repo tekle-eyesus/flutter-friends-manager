@@ -89,14 +89,34 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
+    String upperCaseName(String name) {
+      return name[0].toUpperCase() + name.substring(1);
+    }
+
     return ValueListenableBuilder(
       valueListenable: studentBox.listenable(),
       builder: (context, box, widget) {
         if (box.isEmpty) {
           return Center(
-            child: Image.asset(
-              "assets/image/empty.png",
-              height: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/image/empty.png",
+                  height: 300,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "No  Classmate Added",
+                  style: GoogleFonts.getFont(
+                    "Lato",
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                )
+              ],
             ),
           );
         }
@@ -110,19 +130,9 @@ class _HomePageState extends State<HomePage> {
               items: <ActionItems>[
                 ActionItems(
                   icon: const Icon(
-                    Icons.favorite,
-                    color: Colors.blue,
-                  ),
-                  onPress: () {
-                    // add to favorite!!!
-                    DisplayMessage(context, "Test Text for!!");
-                  },
-                  backgroudColor: Colors.transparent,
-                ),
-                ActionItems(
-                  icon: const Icon(
                     Icons.delete,
                     color: Colors.red,
+                    size: 30,
                   ),
                   onPress: () {
                     boxServices.deleteStudent(index, context);
@@ -151,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                       backgroundImage: _getProfileImage(student.profileImg),
                     ),
                     title: Text(
-                      student.fullName,
+                      upperCaseName(student.fullName),
                       style: GoogleFonts.overpass(
                         textStyle: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -163,14 +173,6 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Text(
-                        //   'Email: ${student.email}',
-                        //   style: GoogleFonts.getFont(
-                        //     "Lato",
-                        //     fontWeight: FontWeight.w500,
-                        //     fontSize: 18,
-                        //   ),
-                        // ),
                         RichText(
                           text: TextSpan(children: [
                             TextSpan(

@@ -19,15 +19,15 @@ String getDate(DateTime date) {
 
 void showEditDialog(BuildContext ctx, Student student) {
   BoxServices boxServices = BoxServices();
-  TextEditingController _nameController =
+  TextEditingController nameController =
       TextEditingController(text: student.fullName);
-  TextEditingController _departmentController =
+  TextEditingController departmentController =
       TextEditingController(text: student.department);
-  TextEditingController _phoneController =
+  TextEditingController phoneController =
       TextEditingController(text: student.phone);
-  TextEditingController _planController =
+  TextEditingController planController =
       TextEditingController(text: student.plan);
-  TextEditingController _emailController =
+  TextEditingController emailController =
       TextEditingController(text: student.email);
 
   InputDecoration inputDecoration() {
@@ -72,35 +72,35 @@ void showEditDialog(BuildContext ctx, Student student) {
               ),
               TextField(
                 decoration: inputDecoration(),
-                controller: _nameController,
+                controller: nameController,
               ),
               const SizedBox(
                 height: 7,
               ),
               TextField(
                 decoration: inputDecoration(),
-                controller: _phoneController,
+                controller: phoneController,
               ),
               const SizedBox(
                 height: 7,
               ),
               TextField(
                 decoration: inputDecoration(),
-                controller: _departmentController,
+                controller: departmentController,
               ),
               const SizedBox(
                 height: 7,
               ),
               TextField(
                 decoration: inputDecoration(),
-                controller: _planController,
+                controller: planController,
               ),
               const SizedBox(
                 height: 7,
               ),
               TextField(
                 decoration: inputDecoration(),
-                controller: _emailController,
+                controller: emailController,
               ),
             ],
           ),
@@ -128,13 +128,13 @@ void showEditDialog(BuildContext ctx, Student student) {
                   //update logic here
                   Student uptStudent = Student(
                     id: student.id,
-                    fullName: _nameController.text,
-                    email: _emailController.text,
+                    fullName: nameController.text,
+                    email: emailController.text,
                     profileImg: student.profileImg,
                     dop: student.dop,
-                    phone: _phoneController.text,
-                    department: _departmentController.text,
-                    plan: _planController.text,
+                    phone: phoneController.text,
+                    department: departmentController.text,
+                    plan: planController.text,
                   );
                   //send to controller
                   boxServices.updateStudent(uptStudent, context);
@@ -158,11 +158,52 @@ void DisplayMessage(BuildContext context, String mesg) {
       style: const TextStyle(color: Colors.white),
     ),
     backgroundColor: Colors.grey.shade900,
-    duration: Duration(seconds: 1),
+    duration: const Duration(seconds: 1),
     behavior: SnackBarBehavior.floating,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(8.0),
     ),
   );
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+void DisplayDeleteMessage(BuildContext context, String mesg, Student student) {
+  final snackBar = SnackBar(
+    content: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          mesg,
+          style: const TextStyle(color: Colors.white),
+        ),
+        TextButton(
+            style: ButtonStyle(
+              padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+              backgroundColor: MaterialStatePropertyAll(
+                Colors.grey.shade800,
+              ),
+            ),
+            onPressed: () {
+              // add logic
+              BoxServices().addStudent(student, context);
+            },
+            child: const Text(
+              "UNDO",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ))
+      ],
+    ),
+    backgroundColor: Colors.grey.shade900,
+    duration: const Duration(seconds: 3),
+    behavior: SnackBarBehavior.floating,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+  );
+  ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

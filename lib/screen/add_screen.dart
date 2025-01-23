@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:class_1/controllers/box_controller.dart';
+import 'package:class_1/helper/helper_fun.dart';
 import 'package:class_1/model/student.dart';
 import 'package:class_1/widget/custom_tf.dart';
 import 'package:class_1/widget/date_picker.dart';
@@ -161,18 +162,27 @@ class _AddScreenState extends State<AddScreen> {
           ),
           GestureDetector(
             onTap: () {
-              // add the student to db
-              Student student = Student(
-                  id: Random().nextInt(1000).toString(),
-                  fullName: nameController.text,
-                  email: emailController.text,
-                  profileImg: pickedImage.toString(),
-                  dop: selectedDate,
-                  phone: phoneController.text,
-                  department: selectedDpt,
-                  plan: planController.text);
-              boxServices.addStudent(student, context);
-              Navigator.pop(context);
+              //input validation via snak bar with red color
+              if (emailController.text.isNotEmpty ||
+                  phoneController.text.isNotEmpty ||
+                  nameController.text.isNotEmpty ||
+                  planController.text.isNotEmpty ||
+                  pickedImage != "") {
+                // add the student to db
+                Student student = Student(
+                    id: Random().nextInt(1000).toString(),
+                    fullName: nameController.text,
+                    email: emailController.text,
+                    profileImg: pickedImage.toString(),
+                    dop: selectedDate,
+                    phone: phoneController.text,
+                    department: selectedDpt,
+                    plan: planController.text);
+                boxServices.addStudent(student, context);
+                Navigator.pop(context);
+              } else {
+                DisplayMessage(context, "Please fill in all required fields!");
+              }
             },
             child: Container(
               alignment: Alignment.center,
