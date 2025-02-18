@@ -1,3 +1,4 @@
+import 'package:class_1/helper/helper_fun.dart';
 import 'package:flutter/material.dart';
 
 class DatePicker extends StatefulWidget {
@@ -19,7 +20,7 @@ class _DatePickerState extends State<DatePicker> {
       height: 60,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Colors.grey.shade300,
+        color: const Color.fromARGB(255, 197, 237, 255),
       ),
       child: ListTile(
         leading: Image.asset(
@@ -28,7 +29,7 @@ class _DatePickerState extends State<DatePicker> {
           height: 30,
         ),
         title: Text(
-          '${selectedDate.year}-0${selectedDate.month}-0${selectedDate.day}',
+          formatBirthday(selectedDate.toString()),
           style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 18,

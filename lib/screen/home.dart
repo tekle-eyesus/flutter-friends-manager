@@ -70,7 +70,11 @@ class _HomePageState extends State<HomePage> {
       body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
           decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 222, 238, 252),
+            // color: Color.fromARGB(255, 222, 238, 252),
+            gradient: LinearGradient(colors: [
+              Color.fromARGB(255, 153, 201, 241),
+              Color.fromARGB(255, 137, 206, 239),
+            ]),
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(10),
             ),
@@ -151,9 +155,11 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   margin: const EdgeInsets.symmetric(vertical: 3),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.shade100,
-                  ),
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(colors: [
+                        const Color.fromARGB(255, 18, 135, 231),
+                        const Color.fromARGB(255, 150, 83, 249),
+                      ])),
                   child: ListTile(
                     isThreeLine: true,
                     leading: CircleAvatar(
@@ -162,69 +168,44 @@ class _HomePageState extends State<HomePage> {
                     ),
                     title: Text(
                       upperCaseName(student.fullName),
-                      style: GoogleFonts.overpass(
+                      style: GoogleFonts.manrope(
                         textStyle: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade900,
-                          fontSize: 22,
+                          color: Colors.blue.shade100,
+                          fontSize: 24,
                         ),
                       ),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: "Email: ",
-                                style: GoogleFonts.getFont(
-                                  "Lato",
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
-                                  color: Colors.grey.shade700,
-                                )),
-                            TextSpan(
-                              text: student.email,
-                              style: GoogleFonts.getFont(
-                                "Lato",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                                color: Colors.black,
-                              ),
-                            )
-                          ]),
+                        Text(
+                          student.department,
+                          style: TextStyle(
+                            color: Colors.blue.shade100,
+                            fontSize: 20,
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              student.department,
-                              style: GoogleFonts.getFont(
-                                "Lato",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                              ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 1),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.blue.shade100.withOpacity(0.5),
+                          ),
+                          child: Text(
+                            student.email,
+                            style: GoogleFonts.getFont(
+                              "Lato",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
                             ),
-                            const SizedBox(
-                              width: 16,
-                              child: Text(
-                                " | ",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              getDate(student.dop),
-                              style: GoogleFonts.getFont(
-                                "Lato",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
+                    trailing:
+                        Icon(Icons.verified, color: Colors.yellow.shade500),
                   ),
                 ),
               ),

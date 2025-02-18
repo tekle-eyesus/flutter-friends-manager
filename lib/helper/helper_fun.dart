@@ -2,19 +2,11 @@ import 'dart:io';
 import 'package:class_1/controllers/box_controller.dart';
 import 'package:class_1/model/student.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-String getDate(DateTime date) {
-  String month = date.month.toString();
-  String day = date.day.toString();
-
-  if (month.length == 1) {
-    month = "0${date.month}";
-  }
-  if (day.length == 1) {
-    day = "0${date.day}";
-  }
-  String dateFormat = '${date.year}-$month-$day';
-  return dateFormat;
+String formatBirthday(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  return DateFormat('d MMM y').format(dateTime); // Example: February 13, 2025
 }
 
 void showEditDialog(BuildContext ctx, Student student) {
@@ -37,7 +29,7 @@ void showEditDialog(BuildContext ctx, Student student) {
         filled: true,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
         ));
   }
 
@@ -53,56 +45,58 @@ void showEditDialog(BuildContext ctx, Student student) {
               color: Colors.blue.shade900,
             ),
           ),
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              //image
-              GestureDetector(
-                onTap: () {
-                  //image update logic here
-                },
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundImage: FileImage(File(student.profileImg)),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //image
+                GestureDetector(
+                  onTap: () {
+                    //image update logic here
+                  },
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: FileImage(File(student.profileImg)),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 7,
-              ),
-              TextField(
-                decoration: inputDecoration(),
-                controller: nameController,
-              ),
-              const SizedBox(
-                height: 7,
-              ),
-              TextField(
-                decoration: inputDecoration(),
-                controller: phoneController,
-              ),
-              const SizedBox(
-                height: 7,
-              ),
-              TextField(
-                decoration: inputDecoration(),
-                controller: departmentController,
-              ),
-              const SizedBox(
-                height: 7,
-              ),
-              TextField(
-                decoration: inputDecoration(),
-                controller: planController,
-              ),
-              const SizedBox(
-                height: 7,
-              ),
-              TextField(
-                decoration: inputDecoration(),
-                controller: emailController,
-              ),
-            ],
+                const SizedBox(
+                  height: 7,
+                ),
+                TextField(
+                  decoration: inputDecoration(),
+                  controller: nameController,
+                ),
+                const SizedBox(
+                  height: 7,
+                ),
+                TextField(
+                  decoration: inputDecoration(),
+                  controller: phoneController,
+                ),
+                const SizedBox(
+                  height: 7,
+                ),
+                TextField(
+                  decoration: inputDecoration(),
+                  controller: departmentController,
+                ),
+                const SizedBox(
+                  height: 7,
+                ),
+                TextField(
+                  decoration: inputDecoration(),
+                  controller: planController,
+                ),
+                const SizedBox(
+                  height: 7,
+                ),
+                TextField(
+                  decoration: inputDecoration(),
+                  controller: emailController,
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(

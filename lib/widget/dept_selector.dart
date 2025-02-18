@@ -27,7 +27,7 @@ class _departmentBtnState extends State<departmentBtn> {
         labelStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.bold,
             ),
-        fillColor: Colors.grey.shade300,
+        fillColor: Color.fromARGB(255, 197, 237, 255),
         filled: true,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

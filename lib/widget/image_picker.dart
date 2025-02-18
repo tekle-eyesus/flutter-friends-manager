@@ -43,6 +43,7 @@ class _ImageSelectorState extends State<ImageSelector> {
         await _pickImage();
       },
       child: Stack(
+        alignment: Alignment.center,
         children: [
           CircleAvatar(
             backgroundColor: Colors.grey.shade400,
@@ -53,12 +54,12 @@ class _ImageSelectorState extends State<ImageSelector> {
           if (pickedImage == null)
             const CircleAvatar(
               backgroundColor: Colors.blueGrey,
-              backgroundImage: AssetImage("assets/image/user.png"),
+              backgroundImage: AssetImage("assets/image/default_profile.jpg"),
               radius: 60,
             ),
           Positioned(
-            bottom: 10,
-            right: 10,
+            bottom: 7,
+            right: MediaQuery.of(context).size.width / 3.2,
             child: Image.asset(
               "assets/icons/camera.png",
               width: 32,
